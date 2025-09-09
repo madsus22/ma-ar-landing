@@ -2832,6 +2832,79 @@ function bindPhone(input, onValidity){
 
 
 
+<script>
+(function(){
+  const vp = document.getElementById('invViewport');
+  const track = document.getElementById('invTrack');
+  const prev = document.querySelector('#inventory .fvx-prev');
+  const next = document.querySelector('#inventory .fvx-next');
+
+  function step(dir){ vp.scrollBy({left: dir * Math.round(vp.clientWidth * .9), behavior:'smooth'}); }
+  prev?.addEventListener('click', ()=>step(-1));
+  next?.addEventListener('click', ()=>step(1));
+
+  async function loadInventory(limit=12){
+    try{
+      const res = await fetch(`/api/inventory?limit=${limit}`, { cache:'no-store' });
+      const { items = [] } = await res.json();
+      if (!items.length) throw new Error('No items');
+      for (const v of items){
+        const li = document.createElement('li');
+        li.className = 'fvx-card';
+        li.innerHTML = `
+          <figure class="fvx-media">
+            <img loading="lazy" src="${v.image}" alt="${v.title}">
+            <span class="fvx-badge">used</span>
+          </figure>
+          <div class="fvx-body">
+            <h3 class="fvx-title">${v.title}</h3>
+            ${v.kms ? `<p class="fvx-trim">${Number(v.kms).toLocaleString()} KM${v.stock?` • Stock ${v.stock}`:''}</p>` : (v.stock?`<p class="fvx-trim">Stock ${v.stock}</p>`:'')}
+            <div class="fvx-price">
+              <div class="fvx-pay"><strong>${v.price || 'Ask'}</strong><small>Sale</small></div>
+              <div class="fvx-sale"><span class="label">Get this car</span><span class="value">Schedule now</span></div>
+            </div>
+            <div class="fvx-actions">
+              <a class="fvx-btn shop" href="#offertunnel">Schedule Now</a>
+              <a class="fvx-btn approve" href="#offertunnel">I’m Interested</a>
+            </div>
+          </div>`;
+        // Whole card click → schedule flow
+        li.addEventListener('click', (e) => {
+          const isBtn = e.target.closest('a,button');
+          e.preventDefault();
+          if (!isBtn) window.openOfferTunnel?.();
+        });
+        track.appendChild(li);
+      }
+    } catch {
+      const li = document.createElement('li');
+      li.className = 'fvx-card';
+      li.innerHTML = `<div class="fvx-body"><h3 class="fvx-title">Inventory unavailable</h3><p class="fvx-trim">Please try again shortly.</p></div>`;
+      track.appendChild(li);
+    }
+  }
+
+  // Hijack your top “Inventory” nav to load + scroll here
+  document.addEventListener('click', (e) => {
+    const link = e.target.closest('[data-inventory-link]');
+    if (!link) return;
+    e.preventDefault();
+    document.getElementById('inventory')?.scrollIntoView({ behavior:'smooth' });
+    loadInventory(16);
+  }, true);
+
+  // Lazy-load when section first becomes visible
+  const io = new IntersectionObserver((entries)=>{
+    if (entries.some(en=>en.isIntersecting)) { loadInventory(12); io.disconnect(); }
+  }, { rootMargin:'200px' });
+  io.observe(document.getElementById('inventory'));
+
+  // Make all inner buttons open your scheduler
+  track.addEventListener('click', (e) => {
+    if (e.target.closest('a')) { e.preventDefault(); window.openOfferTunnel?.(); }
+  });
+})();
+</script>
 
 </body>
 </html>
