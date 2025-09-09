@@ -1,0 +1,16 @@
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 320' width='512' height='320' aria-hidden='true' role='img'>
+  <g fill='none' stroke='#9AA7BE' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'>
+    
+  <!-- body + bed -->
+  <path d='M64 210h30l20-44a32 32 0 0 1 29-18h60l24 26h88v-22h66v58a28 28 0 0 1-28 28h-22' fill='#F7F9FF'/>
+  <!-- bed edge -->
+  <path d='M315 180h84' />
+  <!-- cab glass -->
+  <path d='M147 148h64l20 26h-92z' fill='#EAF0FF'/>
+  <!-- grill hint -->
+  <path d='M312 214h28' />
+  <circle cx='164' cy='238' r='34' fill='white'/><circle cx='348' cy='238' r='34' fill='white'/><circle cx='164' cy='238' r='24' fill='#F7F9FF'/><circle cx='348' cy='238' r='24' fill='#F7F9FF'/>
+
+  </g>
+  <title>Truck</title>
+</svg>

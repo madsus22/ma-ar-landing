@@ -1,0 +1,15 @@
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 320' width='512' height='320' aria-hidden='true' role='img'>
+  <g fill='none' stroke='#9AA7BE' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'>
+    
+  <!-- body -->
+  <path d='M60 210h28l22-44a36 36 0 0 1 32-20h96a220 220 0 0 1 90 24l18 10h42a20 20 0 0 1 20 20v12a28 28 0 0 1-28 28h-20' fill='#F7F9FF'/>
+  <!-- roof/greenhouse -->
+  <path d='M144 130h110a220 220 0 0 1 90 24' />
+  <path d='M152 132h90v36h-126z' fill='#EAF0FF'/>
+  <!-- sliding-door track hint -->
+  <path d='M226 208h62' />
+  <circle cx='152' cy='238' r='34' fill='white'/><circle cx='360' cy='238' r='34' fill='white'/><circle cx='152' cy='238' r='24' fill='#F7F9FF'/><circle cx='360' cy='238' r='24' fill='#F7F9FF'/>
+
+  </g>
+  <title>Minivan</title>
+</svg>

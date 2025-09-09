@@ -1,0 +1,14 @@
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 320' width='512' height='320' aria-hidden='true' role='img'>
+  <g fill='none' stroke='#9AA7BE' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'>
+    
+  <!-- body -->
+  <path d='M64 210h30l22-40a34 34 0 0 1 31-18h66a210 210 0 0 1 52-18h54l26 20h50a20 20 0 0 1 20 20v12a28 28 0 0 1-28 28h-18' fill='#F7F9FF'/>
+  <!-- glasshouse -->
+  <path d='M190 150h92l42 30h-156z' fill='#EAF0FF'/>
+  <!-- beltline -->
+  <path d='M170 180h210' />
+  <circle cx='164' cy='238' r='34' fill='white'/><circle cx='350' cy='238' r='34' fill='white'/><circle cx='164' cy='238' r='24' fill='#F7F9FF'/><circle cx='350' cy='238' r='24' fill='#F7F9FF'/>
+
+  </g>
+  <title>Sedan</title>
+</svg>
