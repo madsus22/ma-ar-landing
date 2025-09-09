@@ -427,6 +427,7 @@
   </script>
 </section>
 
+  
 <section id="inventory" class="featured-block" aria-label="Live inventory">
   <div class="label">INVENTORY</div>
   <div class="fvx-head">
@@ -2904,6 +2905,70 @@ function bindPhone(input, onValidity){
     if (e.target.closest('a')) { e.preventDefault(); window.openOfferTunnel?.(); }
   });
 })();
+</script>
+<script>
+// Smooth-scroll when "Inventory" in the nav is clicked
+document.querySelector('[data-inventory-link]')?.addEventListener('click', (e) => {
+  e.preventDefault();
+  document.getElementById('live-inventory')?.scrollIntoView({ behavior: 'smooth' });
+});
+
+// Build one vehicle card
+function cardHTML(v) {
+  const img = v.image ? `<img src="${v.image}" alt="${v.title}">` : `<div style="width:100%;height:100%;background:#0b0f14"></div>`;
+  const price = v.price ? `<div class="fvx-sale"><span class="label">SALE PRICE</span><span class="value">${v.price}</span></div>` : '';
+  const km = v.mileage ? `<span>${v.mileage}</span>` : '';
+  return `
+  <li class="fvx-card">
+    <figure class="fvx-media">
+      ${img}
+      <span class="fvx-badge">used</span>
+    </figure>
+    <div class="fvx-body">
+      <h3 class="fvx-title">${v.title || 'Vehicle'}</h3>
+      <div class="fvx-meta">${km}</div>
+      <div class="fvx-price">
+        <div class="fvx-pay"><strong>—</strong><small>Bi-Weekly</small></div>
+        ${price}
+      </div>
+      <div class="fvx-actions">
+        <!-- Both CTAs are wired by your router to open the “schedule now” tunnel -->
+        <a class="fvx-btn shop" href="#offertunnel" data-tunnel-trigger="shop-now">Shop Now</a>
+        <a class="fvx-btn approve" href="#offertunnel" data-tunnel-trigger="schedule-appointment">Schedule Now</a>
+      </div>
+    </div>
+  </li>`;
+}
+
+async function loadInventory() {
+  try {
+    const res = await fetch('/api/inventory', { cache: 'no-store' });
+    const data = await res.json();
+    const items = Array.isArray(data.items) ? data.items : [];
+
+    const track = document.getElementById('invTrack');
+    if (!track) return;
+
+    if (!items.length) {
+      track.innerHTML = `<li style="color:#9fb3d9;padding:12px">No vehicles found right now. Please try again later.</li>`;
+      return;
+    }
+
+    track.innerHTML = items.slice(0, 16).map(cardHTML).join('');
+
+    // Hook the arrows
+    const vp = document.getElementById('invViewport');
+    const prev = document.querySelector('#live-inventory .fvx-prev');
+    const next = document.querySelector('#live-inventory .fvx-next');
+    const step = () => Math.round(vp.clientWidth * 0.9);
+    prev?.addEventListener('click', () => vp.scrollBy({ left: -step(), behavior: 'smooth' }));
+    next?.addEventListener('click', () => vp.scrollBy({ left: +step(), behavior: 'smooth' }));
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+document.addEventListener('DOMContentLoaded', loadInventory);
 </script>
 
 </body>
